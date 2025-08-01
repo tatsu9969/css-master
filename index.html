@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Master Hub - Learn CSS Like a Pro</title>
+    <meta name="description" content="CSS初心者から上級者まで。Pure CSS、Tailwind、Bootstrap、CSS-in-JSなど全手法を体験できるインタラクティブ学習サイト">
+    <meta name="keywords" content="CSS, 学習, チュートリアル, Pure CSS, Tailwind, Bootstrap, CSS-in-JS, Sass, デザイン">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/css-master-hub/">
+    <meta property="og:title" content="CSS Master Hub - インタラクティブCSS学習サイト">
+    <meta property="og:description" content="CSSの全手法を実際に体験して学べる無料サイト。Apple風のモダンUIで楽しく学習！">
+    <meta property="og:image" content="https://yourusername.github.io/css-master-hub/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GitHub Corner (for GitHub Pages) -->
+    <style>
+        .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,20%,60%,100%{transform:rotate(0)}40%,80%{transform:rotate(-25deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
+    </style>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #007AFF;
+            --primary-green: #34C759;
+            --primary-orange: #FF9500;
+            --primary-red: #FF3B30;
+            --primary-purple: #AF52DE;
+            --secondary-blue: #5AC8FA;
+            --bg-primary: #000;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #fff;
+            --text-secondary: #ccc;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 50%, #000 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* ==================
+           NAVIGATION SYSTEM
+           ================== */
+        .main-nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 12px 25px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .main-nav:hover {
+            background: rgba(0, 0, 0, 0.95);
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 25px 50px rgba(0, 122, 255, 0.3);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        /* ==================
+           HERO SECTION
+           ================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 122, 255, 0.15) 0%, transparent 70%);
+            animation: heroFloat 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroFloat {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1.2) rotate(10deg); opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, #ffffff, #007AFF, #34C759);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #999;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2s forwards;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-blue), #0056CC);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 122, 255, 0.5);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--glass-bg);
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 50px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================
+           FEATURES SECTION
+           ================== */
+        .features {
+            padding: 150px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, var(--glass-bg), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 40px 100px rgba(0, 122, 255, 0.3);
+            border-color: rgba(0, 122, 255, 0.4);
+        }
+
+        .feature-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: var(--icon-gradient, linear-gradient(135deg, var(--primary-blue), #0056CC));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .feature-card:hover .feature-icon::after {
+            width: 120px;
+            height: 120px;
+        }
+
+        .feature-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .feature-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-link:hover {
+            color: var(--secondary-blue);
+            transform: translateX(5px);
+        }
+
+        /* Color variants for feature cards */
+        .feature-card.green {
+            --icon-gradient: linear-gradient(135deg, var(--primary-green), #30A46C);
+        }
+
+        .feature-card.orange {
+            --icon-gradient: linear-gradient(135deg, var(--primary-orange), #F76707);
+        }
+
+        .feature-card.red {
+            --icon-gradient: linear-gradient(135deg, var(--primary-red), #E5484D);
+        }
+
+        .feature-card.purple {
+            --icon-gradient: linear-gradient(135deg, var(--primary-purple), #8E4EC6);
+        }
+
+        .feature-card.blue {
+            --icon-gradient: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+        }
+
+        /* ==================
+           DEMO SHOWCASE
+           ================== */
+        .demo-showcase {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            position: relative;
+        }
+
+        .demo-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .demo-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .demo-tab {
+            padding: 15px 25px;
+            background: transparent;
+            border: 2px solid var(--glass-border);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-tab:hover, .demo-tab.active {
+            background: var(--glass-bg);
+            border-color: var(--primary-blue);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .demo-content {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .demo-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .demo-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-blue);
+        }
+
+        .demo-card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .demo-card-description {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .demo-button {
+            background: linear-gradient(135deg, var(--primary-blue), #0056CC);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.4);
+        }
+
+        /* ==================
+           STATS SECTION
+           ================== */
+        .stats {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 200;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* ==================
+           FOOTER
+           ================== */
+        .footer {
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            background: var(--bg-secondary);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.3);
+        }
+
+        /* ==================
+           RESPONSIVE DESIGN
+           ================== */
+        @media (max-width: 768px) {
+            .main-nav {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin: 20px;
+                border-radius: 20px;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero {
+                min-height: 80vh;
+                padding: 100px 0 50px;
+            }
+
+            .features {
+                padding: 100px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .demo-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* ==================
+           SCROLL ANIMATIONS
+           ================== */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================
+           INTERACTIVE ELEMENTS
+           ================== */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* GitHub Corner */
+        .github-corner {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        .github-corner svg {
+            fill: var(--primary-blue);
+            color: #fff;
+            width: 80px;
+            height: 80px;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 122, 255, 0.3);
+            border-top: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading CSS Magic...</div>
+        </div>
+    </div>
+
+    <!-- GitHub Corner -->
+    <a href="https://github.com/yourusername/css-master-hub" class="github-corner" aria-label="View source on GitHub" target="_blank" rel="noopener">
+        <svg viewBox="0 0 250 250" aria-hidden="true">
+            <path d="m0,0 0,250 250,0 0,-135 -135,135 z"></path>
+            <path d="m128.3,109.0 c113.8,99.7 119.0,89.6 119.0,89.6 c0,0 15.9,8.6 30.6,5.4 c14.7,-3.2 32.9,-16.3 32.9,-16.3 c0,0 18.9,-22.9 18.9,-53.9 c0,-31.0 -11.9,-56.6 -11.9,-56.6 c0,0 -6.2,-17.3 -13.2,-24.3 c-7.0,-7.0 -24.3,-13.2 -24.3,-13.2 c0,0 -25.6,-11.9 -56.6,-11.9 c-31.0,0 -53.9,18.9 -53.9,18.9 c0,0 -13.1,18.2 -16.3,32.9 c-3.2,14.7 5.4,30.6 5.4,30.6 c0,0 -10.1,5.2 89.6,119.0 z" fill="currentColor" class="octo-body"></path>
+            <path d="m115.0,115.0 c0,0 14.0,-43.3 43.3,-43.3 c29.3,0 43.3,43.3 43.3,43.3 c0,0 -43.3,14.0 -43.3,43.3 c0,-29.3 -43.3,-43.3 -43.3,-43.3 z" fill="currentColor" class="octo-arm"></path>
+        </svg>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-menu">
+            <a href="#home" class="nav-item active">Home</a>
+            <a href="#features" class="nav-item">Features</a>
+            <a href="#demo" class="nav-item">Demo</a>
+            <a href="#learn" class="nav-item">Learn</a>
+            <a href="#about" class="nav-item">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">CSS Master Hub</h1>
+            <p class="hero-subtitle">インタラクティブに学ぶ、次世代CSS学習プラットフォーム</p>
+            <p class="hero-description">
+                Pure CSS、Tailwind、Bootstrap、CSS-in-JS、Sass、CSS Modules。<br>
+                全てのCSS手法を実際に体験して、違いを肌で感じながら学習できる無料サイト。
+            </p>
+            <div class="hero-cta">
+                <a href="#demo" class="cta-button" onclick="createRipple(event, this)">
+                    🚀 今すぐ体験する
+                </a>
+                <a href="#features" class="cta-button secondary" onclick="createRipple(event, this)">
+                    📚 機能を見る
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header scroll-fade">
+            <h2 class="section-title">学習機能</h2>
+            <p class="section-subtitle">
+                CSS初心者から上級者まで、段階的にスキルアップできる豊富な学習コンテンツ
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card scroll-fade" onclick="createRipple(event, this)">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">インタラクティブデモ</h3>
+                <p class="feature-description">
+                    同じ内容を異なるCSS手法で実装。実際に触って違いを体験できます。
+                </p>
+                <a href="#demo" class="feature-link">デモを見る →</a>
+            </div>
+
+            <div class="feature-card green scroll-fade" onclick="createRipple(event, this)">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">リアルタイム比較</h3>
+                <p class="feature-description">
+                    各CSS手法のメリット・デメリットを実際のコードと一緒に比較学習。
+                </p>
+                <a href="#learn" class="feature-link">比較を見る →</a>
+            </div>
+
+            <div class="feature-card orange scroll-fade" onclick="createRipple(event, this)">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Apple風デザイン</h3>
+                <p class="feature-description">
+                    モダンでスタイリッシュなUI。学習そのものが楽しくなるデザイン。
+                </p>
+                <a href="#" class="feature-link">詳細を見る →</a>
+            </div>
+
+            <div class="feature-card red scroll-fade" onclick="createRipple(event, this)">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">レスポンシブ対応</h3>
+                <p class="feature-description">
+                    スマホ、タブレット、PCどの環境でも快適に学習できます。
+                </p>
+                <a href="#" class="feature-link">確認する →</a>
+            </div>
+
+            <div class="feature-card purple scroll-fade" onclick="createRipple(event, this)">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">段階的学習</h3>
+                <p class="feature-description">
+                    初心者から上級者まで、レベルに合わせたステップアップ式学習。
+                </p>
+                <a href="#learn" class="feature-link">始める →</a>
+            </div>
+
+            <div class="feature-card blue scroll-fade" onclick="createRipple(event, this)">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">実践的スキル</h3>
+                <p class="feature-description">
+                    実際の開発現場で使える実践的なテクニックとベストプラクティス。
+                </p>
+                <a href="#" class="feature-link">実践する →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Showcase -->
+    <section class="demo-showcase" id="demo">
+        <div class="demo-container">
+            <div class="section-header scroll-fade">
+                <h2 class="section-title">体験デモ</h2>
+                <p class="section-subtitle">
+                    各CSS手法の特徴を実際に体験してみましょう
+                </p>
+            </div>
+
+            <div class="demo-tabs">
+                <button class="demo-tab active" onclick="showDemo('pure-css', this)">Pure CSS</button>
+                <button class="demo-tab" onclick="showDemo('tailwind', this)">Tailwind</button>
+                <button class="demo-tab" onclick="showDemo('bootstrap', this)">Bootstrap</button>
+                <button class="demo-tab" onclick="showDemo('css-in-js', this)">CSS-in-JS</button>
+                <button class="demo-tab" onclick="showDemo('sass', this)">Sass</button>
+                <button class="demo-tab" onclick="showDemo('css-modules', this)">CSS Modules</button>
+            </div>
+
+            <div class="demo-content active" id="pure-css-demo">
+                <div class="demo-grid">
+                    <div class="demo-card scroll-fade">
+                        <h3 class="demo-card-title">🌟 3D ホバーエフェクト</h3>
+                        <p class="demo-card-description">
+                            Pure CSSで実現する立体的なホバーアニメーション。transform3Dを使った滑らかな動き。
+                        </p>
+                        <button class="demo-button" onclick="demonstrateEffect(this, 'pure-css-3d')">体験する</button>
+                    </div>
+                    <div class="demo-card scroll-fade">
+                        <h3 class="demo-card-title">✨ ガラスモーフィズム</h3>
+                        <p class="demo-card-description">
+                            backdrop-filterを使った透明感のあるガラス質感。モダンなデザイントレンド。
+                        </p>
+                        <button class="demo-button" onclick="demonstrateEffect(this, 'glassmorphism')">体験する</button>
+                    </div>
+                    <div class="demo-card scroll-fade">
+                        <h3 class="demo-card-title">⚡ 高度アニメーション</h3>
+                        <p class="demo-card-description">
+                            CSS Keyframesを使った複雑なアニメーション。パフォーマンスも考慮した実装。
+                        </p>
+                        <button class="demo-button" onclick="demonstrateEffect(this, 'advanced-animation')">体験する</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-content" id="tailwind-demo">
+                <div class="demo-grid">
+                    <div class="demo-card scroll-fade">
+                        <h3 class="demo-card-title">🎨 ユーティリティファースト</h3>
+                        <p class="demo-card-description">
+                            小さなユーティリティクラスを組み合わせて、迅速にスタイリング。
+                        </p>
+                        <button class="demo-button" onclick="demonstrateEffect(this, 'utility-first')">体験する</button>
+                    </div>
+                    <div class="demo-card scroll-fade">
+                        <h3 class="demo-card-title">📏 一貫性のあるデザイン</h3>
+                        <p class="demo-card-description">
+                            統一されたスペーシング、カラーパレット、タイポグラフィシステム。
+                        </p>
+                        <button class="demo-button" onclick="demonstrateEffect(this, 'design-system')">体験する</button>
+                    </div>
+                    <div class="demo-card scroll-fade">
+                        <h3 class="demo-card-title">⚡ 高速プロトタイピング</h3>
+                        <p class="demo-card-description">
+                            HTMLを離れることなく、素早くレスポンシブなUIを構築。
+                        </p>
+                        <button class="demo-button" onclick="demonstrateEffect(this, 'rapid-prototyping')">体験する</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other demo contents would be similar... -->
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="learn">
+        <div class="section-header scroll-fade">
+            <h2 class="section-title">学習統計</h2>
+            <p class="section-subtitle">多くの開発者が選ぶCSS学習プラットフォーム</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" data-target="1000">0</div>
+                <div class="stat-label">学習者数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="6">0</div>
+                <div class="stat-label">CSS手法</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">インタラクティブデモ</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">満足度 (%)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="about">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home" class="footer-link">Home</a>
+                <a href="#features" class="footer-link">Features</a>
+                <a href="#demo" class="footer-link">Demo</a>
+                <a href="#learn" class="footer-link">Learn</a>
+                <a href="https://github.com/yourusername/css-master-hub" class="footer-link" target="_blank">GitHub</a>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://github.com/yourusername" class="social-link" target="_blank" rel="noopener">
+                    <span>📚</span>
+                </a>
+                <a href="https://twitter.com/yourusername" class="social-link" target="_blank" rel="noopener">
+                    <span>🐦</span>
+                </a>
+                <a href="mailto:your@email.com" class="social-link">
+                    <span>📧</span>
+                </a>
+            </div>
+            
+            <p class="footer-text">
+                Made with ❤️ for CSS learners worldwide<br>
+                © 2025 CSS Master Hub. Open source on GitHub.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Smooth Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    if (this.classList.contains('nav-item')) {
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-fade, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Stats Animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(progress * target);
+                
+                element.textContent = current;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Animate stats when they become visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    const number = entry.target.querySelector('.stat-number');
+                    const target = parseInt(number.dataset.target);
+                    animateCounter(number, target);
+                    entry.target.dataset.animated = 'true';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            statsObserver.observe(item);
+        });
+
+        // Ripple Effect
+        function createRipple(event, element) {
+            const rect = element.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+            `;
+            
+            element.style.position = 'relative';
+            element.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // Demo Switching
+        function showDemo(demoType, button) {
+            // Hide all demo contents
+            document.querySelectorAll('.demo-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected demo
+            document.getElementById(demoType + '-demo').classList.add('active');
+            
+            // Update active tab
+            document.querySelectorAll('.demo-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            button.classList.add('active');
+        }
+
+        // Demo Effects
+        function demonstrateEffect(button, effectType) {
+            const originalText = button.textContent;
+            button.textContent = '実行中...';
+            button.disabled = true;
+            
+            // Different effects based on type
+            switch(effectType) {
+                case 'pure-css-3d':
+                    button.parentElement.style.transform = 'translateY(-20px) rotateX(10deg) rotateY(10deg)';
+                    break;
+                case 'glassmorphism':
+                    button.parentElement.style.background = 'rgba(255, 255, 255, 0.2)';
+                    button.parentElement.style.backdropFilter = 'blur(30px)';
+                    break;
+                case 'advanced-animation':
+                    button.parentElement.style.animation = 'pulse 1s ease-in-out infinite';
+                    break;
+                default:
+                    button.parentElement.style.transform = 'scale(1.05)';
+            }
+            
+            setTimeout(() => {
+                button.textContent = '完了！';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.parentElement.style.cssText = '';
+                }, 1000);
+            }, 2000);
+        }
+
+        // Navigation scroll spy
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Performance optimization
+        let ticking = false;
+        function updateOnScroll() {
+            // Add any scroll-based updates here
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
+        });
+
+        // Error handling
+        window.addEventListener('error', (e) => {
+            console.log('Error caught:', e.error);
+        });
+    </script>
+</body>
+</html>
